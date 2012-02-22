@@ -47,10 +47,13 @@ source "$HOME/.oh-my-zsh/init.zsh"
 # bindkey -M viins '[1;9A' up-line-or-history
 # bindkey -M viins '[1;9B' down-line-or-history
 
-bindkey -M viins '[1;9D' vi-backward-word
-bindkey -M viins '[1;9C' vi-forward-word
-bindkey -M viins "[1;9A" history-search-backward
-bindkey -M viins "[1;9B" history-search-forward
+if [[ "$OSTYPE" == darwin* ]]
+then
+    bindkey -M viins '[1;9D' vi-backward-word
+    bindkey -M viins '[1;9C' vi-forward-word
+    bindkey -M viins "[1;9A" history-search-backward
+    bindkey -M viins "[1;9B" history-search-forward
+fi
 
 export FPATH="$FPATH:/opt/local/share/zsh/site-functions/"
 if [ -f /opt/local/etc/profile.d/autojump.sh ]; then
