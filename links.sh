@@ -2,7 +2,7 @@
 
 # NOTE this isn't robust at all
 
-if [[ $OSTYPE == darwin* ]]
+if [[ $OSTYPE == darwin* && -e ~/bin/reattach-to-user-namespace ]]
 then
     cat >> .tmux.conf <<EOF
 # for tmux, c.f. https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
