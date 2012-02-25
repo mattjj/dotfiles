@@ -1,0 +1,3 @@
+## Stuff To Add ##
+- Automatically check if $OSTYPE == darwin when installing and only add the macports stuff (path,manpath,osx plugin)
+
