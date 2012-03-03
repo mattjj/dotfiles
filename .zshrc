@@ -40,7 +40,7 @@ source "$HOME/.oh-my-zsh/init.zsh"
 # bindkey -M viins '^E' end-of-line
 # bindkey -M viins '^K' kill-line
 # bindkey -M viins '^D' delete-char
-# bindkey -M viins '^Y' yank
+bindkey -M viins '^Y' yank
 # bindkey -M viins "\e[Z" reverse-menu-complete
 # bindkey -M viins "^[[A" history-search-backward
 # bindkey -M viins "^[[B" history-search-forward
