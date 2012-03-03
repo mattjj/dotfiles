@@ -60,7 +60,6 @@ if [ -f /opt/local/etc/profile.d/autojump.sh ]; then
     . /opt/local/etc/profile.d/autojump.sh
 fi
 
-compdef pkill=kill
 compdef pkill=killall
 
 ### commands to remember
