@@ -21,11 +21,7 @@ zstyle ':omz:*:*' color 'yes'
 zstyle ':omz:terminal' auto-title 'yes'
 
 # Set the plugins to load (see $OMZ/plugins/).
-<<<<<<< HEAD
 zstyle ':omz:load' plugin 'archive' 'git' 'gnu-utils' 'rsync' 'python' 'macports' 'history-substring-search' 'zsh-syntax-highlighting'
-=======
-zstyle ':omz:load' plugin 'archive' 'git' 'rsync' 'python' 'macports' 'history-substring-search' 'zsh-syntax-highlighting'
->>>>>>> 9b5cd1e58a1d1e78066e8a09ee579f1018e2ee4d
 
 # Set the prompt theme to load.
 # Setting it to 'random' loads a random theme.
