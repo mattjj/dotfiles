@@ -1,0 +1,10 @@
+zstyle ':omz:load' plugin 'osx'
+
+alias tac=gtac
+alias gvim='mvim'
+alias gv='mvim'
+
+bindkey -M viins '[1;9D' vi-backward-word
+bindkey -M viins '[1;9C' vi-forward-word
+bindkey -M viins "[1;9A" history-search-backward
+bindkey -M viins "[1;9B" history-search-forward

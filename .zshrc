@@ -21,7 +21,7 @@ zstyle ':omz:*:*' color 'yes'
 zstyle ':omz:terminal' auto-title 'yes'
 
 # Set the plugins to load (see $OMZ/plugins/).
-zstyle ':omz:load' plugin 'archive' 'git' 'osx' 'rsync' 'python' 'macports' 'history-substring-search' 'zsh-syntax-highlighting'
+zstyle ':omz:load' plugin 'archive' 'git' 'rsync' 'python' 'macports' 'history-substring-search' 'zsh-syntax-highlighting'
 
 # Set the prompt theme to load.
 # Setting it to 'random' loads a random theme.
@@ -32,6 +32,7 @@ zstyle ':omz:prompt' theme 'customprose'
 source "$HOME/.oh-my-zsh/init.zsh"
 
 # Customize to your needs...
+setopt autocd
 
 # my old key bindings
 # bindkey -M viins '^?' backward-delete-char
@@ -41,6 +42,7 @@ source "$HOME/.oh-my-zsh/init.zsh"
 # bindkey -M viins '^K' kill-line
 # bindkey -M viins '^D' delete-char
 bindkey -M viins '^Y' yank
+bindkey -M viins '' undo
 # bindkey -M viins "\e[Z" reverse-menu-complete
 # bindkey -M viins "^[[A" history-search-backward
 # bindkey -M viins "^[[B" history-search-forward
@@ -49,10 +51,12 @@ bindkey -M viins '^Y' yank
 
 if [[ "$OSTYPE" == darwin* ]]
 then
-    bindkey -M viins '[1;9D' vi-backward-word
-    bindkey -M viins '[1;9C' vi-forward-word
-    bindkey -M viins "[1;9A" history-search-backward
-    bindkey -M viins "[1;9B" history-search-forward
+    source ~/.zshrc_mac
+fi
+
+if [ -e ~/.zshrc_specific ]
+then
+    source ~/.zshrc_specific
 fi
 
 export FPATH="$FPATH:/opt/local/share/zsh/site-functions/"
@@ -62,6 +66,17 @@ fi
 
 compdef pkill=kill
 compdef pkill=killall
+
+fancy-ctrl-z () {
+    if [[ $#BUFFER -eq 0 ]]; then
+        bg
+        zle redisplay
+    else
+        zle push-input
+    fi
+}
+zle -N fancy-ctrl-z
+bindkey '^Z' fancy-ctrl-z
 
 ### commands to remember
 ## network mapping
