@@ -21,7 +21,15 @@ zstyle ':omz:*:*' color 'yes'
 zstyle ':omz:terminal' auto-title 'yes'
 
 # Set the plugins to load (see $OMZ/plugins/).
-zstyle ':omz:load' plugin 'archive' 'git' 'rsync' 'python' 'macports' 'history-substring-search' 'zsh-syntax-highlighting'
+if [[ "$OSTYPE" == darwin* ]]
+then
+    source ~/.zshrc_mac
+fi
+if [ -e ~/.zshrc_specific ]
+then
+    source ~/.zshrc_specific
+fi
+zstyle ':omz:load' plugin 'osx' 'macports' 'archive' 'git' 'rsync' 'python' 'history-substring-search' 'zsh-syntax-highlighting'
 
 # Set the prompt theme to load.
 # Setting it to 'random' loads a random theme.
@@ -48,16 +56,6 @@ bindkey -M viins '' undo
 # bindkey -M viins "^[[B" history-search-forward
 # bindkey -M viins '[1;9A' up-line-or-history
 # bindkey -M viins '[1;9B' down-line-or-history
-
-if [[ "$OSTYPE" == darwin* ]]
-then
-    source ~/.zshrc_mac
-fi
-
-if [ -e ~/.zshrc_specific ]
-then
-    source ~/.zshrc_specific
-fi
 
 export FPATH="$FPATH:/opt/local/share/zsh/site-functions/"
 if [ -f /opt/local/etc/profile.d/autojump.sh ]; then

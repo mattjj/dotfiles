@@ -1,4 +1,5 @@
-zstyle ':omz:load' plugin 'osx'
+# TODO make this work
+# zstyle ':omz:load' plugin 'osx' 'macports'
 
 alias tac=gtac
 alias gvim='mvim'
