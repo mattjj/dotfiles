@@ -42,20 +42,14 @@ source "$HOME/.oh-my-zsh/init.zsh"
 # Customize to your needs...
 setopt autocd
 
-# my old key bindings
-# bindkey -M viins '^?' backward-delete-char
-# bindkey -M viins '^H' backward-delete-char
-# bindkey -M viins '^A' beginning-of-line
-# bindkey -M viins '^E' end-of-line
-# bindkey -M viins '^K' kill-line
-# bindkey -M viins '^D' delete-char
-bindkey -M viins '^Y' yank
-bindkey -M viins '' undo
-# bindkey -M viins "\e[Z" reverse-menu-complete
-# bindkey -M viins "^[[A" history-search-backward
-# bindkey -M viins "^[[B" history-search-forward
-# bindkey -M viins '[1;9A' up-line-or-history
-# bindkey -M viins '[1;9B' down-line-or-history
+# my key bindings
+bindkey -M viins "$keyinfo[Control]A" beginning-of-line
+bindkey -M viins "$keyinfo[Control]E" end-of-line
+bindkey -M viins "$keyinfo[Control]K" kill-line
+bindkey -M viins "$keyinfo[Control]Y" yank
+bindkey -M viins "$keyinfo[Control]D" delete-char
+# this undo is nice for undoing tab completions
+bindkey -M viins "$keyinfo[Control]T" undo
 
 export FPATH="$FPATH:/opt/local/share/zsh/site-functions/"
 if [ -f /opt/local/etc/profile.d/autojump.sh ]; then
