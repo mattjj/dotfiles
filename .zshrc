@@ -21,14 +21,6 @@ zstyle ':omz:*:*' color 'yes'
 zstyle ':omz:terminal' auto-title 'yes'
 
 # Set the plugins to load (see $OMZ/plugins/).
-if [[ "$OSTYPE" == darwin* ]]
-then
-    source ~/.zshrc_mac
-fi
-if [ -e ~/.zshrc_specific ]
-then
-    source ~/.zshrc_specific
-fi
 zstyle ':omz:load' plugin 'osx' 'macports' 'archive' 'git' 'rsync' 'python' 'history-substring-search' 'zsh-syntax-highlighting'
 
 # Set the prompt theme to load.
@@ -41,6 +33,15 @@ source "$HOME/.oh-my-zsh/init.zsh"
 
 # Customize to your needs...
 setopt autocd
+
+if [[ "$OSTYPE" == darwin* && -e ~/.zshrc_mac ]]
+then
+    source ~/.zshrc_mac
+fi
+if [ -e ~/.zshrc_specific ]
+then
+    source ~/.zshrc_specific
+fi
 
 # my key bindings
 bindkey -M viins "$keyinfo[Control]A" beginning-of-line
@@ -88,6 +89,8 @@ alias v='vim'
 alias vv='vim -u NONE'
 
 alias top='htop'
+
+alias cloc='cloc --exclude-dir=.git'
 
 function mdown()
 {
