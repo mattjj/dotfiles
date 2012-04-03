@@ -5,7 +5,6 @@ alias tac=gtac
 alias gvim='mvim'
 alias gv='mvim'
 
-# TODO are option keys working?
 bindkey -M viins '[1;9D' vi-backward-word
 bindkey -M viins '[1;9C' vi-forward-word
 bindkey -M viins "[1;9A" history-search-backward
