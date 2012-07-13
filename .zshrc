@@ -147,3 +147,5 @@ function redecho # {{{
     echo -n "\033[m"
 } # }}}
 
+
+# [ -s "/Users/mattjj/.scm_breeze/scm_breeze.sh" ] && source "/Users/mattjj/.scm_breeze/scm_breeze.sh"

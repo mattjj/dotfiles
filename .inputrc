@@ -4,5 +4,13 @@ set input-meta on
 set output-meta on
 set convert-meta off
 
+"OA": history-search-backward
+"OB": history-search-forward
+
 "\e[A": history-search-backward
 "\e[B": history-search-forward
+
+"[1;9D": backward-word
+"[1;9C": forward-word
+"": backward-word
+"": forward-word
