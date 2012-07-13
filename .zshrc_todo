@@ -1,0 +1,108 @@
+function show_todo { cat $TODOFILE | gawk '{print NR". " $0}' }
+
+function todo
+{
+    if [ $# -ne 0 ]
+    then
+        echo "$*" >> $TODOFILE
+        (echo -n "+ " && echo "$*;$(date)") >> $TODOHISTORY
+    fi
+    show_todo
+}
+
+function todone
+{
+    if [[ "$*" =~ ^[0-9]+$ ]]
+    then
+        gsed -n "$1s/.*/- \0;$(date)/p" $TODOFILE >> $TODOHISTORY
+        gsed -n "$1p" $TODOFILE >> $DONEFILE
+        gsed -i "$1d" $TODOFILE
+    elif [ -n "$*" ]
+    then
+        NUM_MATCHES=$(gsed -n "/$*/Ip" $TODOFILE | wc -l)
+        if [ $NUM_MATCHES -eq 0 ]
+        then
+            redecho "!! no matches !!"
+        elif [ $NUM_MATCHES -gt 1 ]
+        then
+            redecho "!! multiple matches !!"
+            cat $TODOFILE | gawk '{print NR". " $0}' | grep --color=none -iE "^[0-9]+\. .*$*" | grep --color=always -iE "$*"
+            return
+        else
+            gsed -n "/$*/Is/.*/- \0;$(date)/p" $TODOFILE >> $TODOHISTORY
+            gsed -n "/$*/Ip" $TODOFILE >> $DONEFILE
+            gsed -i "/$*/Id" $TODOFILE
+        fi
+    fi
+    show_todo
+}
+
+function toskip
+{
+    if [[ "$*" =~ ^[0-9]+$ ]]
+    then
+        MATCH=$(gsed -n "${1}p" $TODOFILE)
+        # see comment below for why the temp file is necessary
+        tac $TODOHISTORY | gsed "0,/$MATCH/{//d;}" | tac > ~/.todohist-temp
+        changesize=$(( $(wc -l <~/.todo-history) - $(wc -l <~/.todohist-temp) ))
+        if [ $changesize -ne 0 -a $changesize -ne 1 ]
+        then
+            redecho "!! problem revising history; revise manually !!"
+            diff ~/.todohist-temp $TODOHISTORY
+        else
+            \mv ~/.todohist-temp $TODOHISTORY
+        fi
+        rm -f ~/.todohist-temp
+        gsed -i "${1}d" $TODOFILE
+    elif [ -n "$*" ]
+    then
+        NUM_MATCHES=$(gsed -n "/$*/Ip" $TODOFILE | wc -l)
+        if [ $NUM_MATCHES -eq 0 ]
+        then
+            redecho "!! no matches !!"
+        elif [ $NUM_MATCHES -gt 1 ]
+        then
+            redecho "!! multiple matches !!"
+            grep --color=always "$*" $TODOFILE | gawk '{print NR". " $0}'
+            return
+        else
+            MATCH=$(gsed -n "/$*/Ip" $TODOFILE)
+            # weird bug, i think in zsh... >! redirection was just truncating the file
+            # giving no output even though even though it was being given non-null input
+            # tac $TODOHISTORY | gsed "0,/$MATCH/{//d;}" | tac >! $TODOHISTORY
+            tac $TODOHISTORY | gsed "0,/$MATCH/{//d;}" | tac > ~/.todohist-temp
+            changesize=$(( $(wc -l < $TODOHISTORY) - $(wc -l <~/.todohist-temp) ))
+            if [ $changesize -ne 0 -a $changesize -ne 1 ]
+            then
+                redecho "!! problem revising history; revise manually !!"
+                diff ~/.todohist-temp $TODOHISTORY
+            else
+                \mv ~/.todohist-temp $TODOHISTORY
+            fi
+            # rm -f ~/.todohist-temp
+            gsed -i "/$*/Id" $TODOFILE
+        fi
+    fi
+    show_todo
+}
+
+function prune_donelist
+{
+    IFS=$'\n'
+    DAYAGOFILE="/tmp/donelist_dayago"
+    TESTFILE="/tmp/donelist_testtime"
+
+    rm -f $DONEFILE
+    touch $DONEFILE
+
+    gtouch -d "-1day" $DAYAGOFILE
+    for l in $(tail -n 25 ~/.todo-history | grep '^-')
+    do
+        gtouch -d "$(echo $l | cut -d";" -f2)" $TESTFILE
+        if [ $TESTFILE -nt $DAYAGOFILE ]
+        then
+            echo "$l" | cut -d";" -f1 | gsed 's/^- //' >>! $DONEFILE
+        fi
+    done
+    rm -f $DAYAGOFILE $TESTFILE
+}
