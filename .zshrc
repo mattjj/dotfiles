@@ -146,3 +146,6 @@ function redecho # {{{
     echo -n "\033[m"
 } # }}}
 
+export LD_LIBRARY_PATH=/opt/intel/composer_xe_2011_sp1.10.319/mkl/lib/intel64/
+
+export JULIA_EDITOR="vim"
