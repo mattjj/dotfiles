@@ -79,7 +79,7 @@ function toskip
             else
                 \mv ~/.todohist-temp $TODOHISTORY
             fi
-            # rm -f ~/.todohist-temp
+            rm -f ~/.todohist-temp
             gsed -i "/$*/Id" $TODOFILE
         fi
     fi
@@ -88,7 +88,6 @@ function toskip
 
 function prune_donelist
 {
-    IFS=$'\n'
     DAYAGOFILE="/tmp/donelist_dayago"
     TESTFILE="/tmp/donelist_testtime"
 
@@ -96,13 +95,13 @@ function prune_donelist
     touch $DONEFILE
 
     gtouch -d "-1day" $DAYAGOFILE
-    for l in $(tail -n 25 ~/.todo-history | grep '^-')
+    (IFS=$'\n'; for l in $(tail -n 25 ~/.todo-history | grep '^-')
     do
         gtouch -d "$(echo $l | cut -d";" -f2)" $TESTFILE
         if [ $TESTFILE -nt $DAYAGOFILE ]
         then
             echo "$l" | cut -d";" -f1 | gsed 's/^- //' >>! $DONEFILE
         fi
-    done
+    done)
     rm -f $DAYAGOFILE $TESTFILE
 }
