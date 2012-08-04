@@ -34,15 +34,6 @@ source "$HOME/.oh-my-zsh/init.zsh"
 # Customize to your needs...
 setopt autocd
 
-if [[ "$OSTYPE" == darwin* && -e ~/.zshrc_mac ]]
-then
-    source ~/.zshrc_mac
-fi
-if [ -e ~/.zshrc_specific ]
-then
-    source ~/.zshrc_specific
-fi
-
 # my key bindings
 bindkey -M viins "$keyinfo[Control]A" beginning-of-line
 bindkey -M viins "$keyinfo[Control]E" end-of-line
@@ -150,3 +141,15 @@ export LD_LIBRARY_PATH=/opt/intel/composer_xe_2011_sp1.10.319/mkl/lib/intel64/
 
 export JULIA_EDITOR="vim"
 
+settitle() {
+    printf "\033k$1\033\\"
+}
+
+if [[ "$OSTYPE" == darwin* && -e ~/.zshrc_mac ]]
+then
+    source ~/.zshrc_mac
+fi
+if [ -e ~/.zshrc_specific ]
+then
+    source ~/.zshrc_specific
+fi
