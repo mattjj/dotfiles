@@ -92,10 +92,10 @@ function prune_donelist
     TESTFILE="/tmp/donelist_testtime"
 
     rm -f $DONEFILE
-    touch $DONEFILE
+    gtouch $DONEFILE
 
     gtouch -d "-1day" $DAYAGOFILE
-    (IFS=$'\n'; for l in $(tail -n 25 ~/.todo-history | grep '^-')
+    (IFS=$'\n'; for l in $(tail -n 25 $TODOHISTORY | grep '^-')
     do
         gtouch -d "$(echo $l | cut -d";" -f2)" $TESTFILE
         if [ $TESTFILE -nt $DAYAGOFILE ]

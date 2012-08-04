@@ -1,0 +1,23 @@
+[core]
+    excludesfile = /Users/mattjj/.gitignore
+    editor = vim
+[alias]
+    st = status
+    ci = commit
+    co = checkout
+    br = branch
+    hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+    lol = log --graph --decorate --oneline
+    lola = log --graph --decorate --oneline --all
+[user]
+    name = Matthew Johnson
+    email = mattjj@csail.mit.edu
+[color]
+    branch = auto
+    diff = auto
+    interactive = auto
+    status = auto
+[merge]
+    tool = opendiff
+[credential]
+	helper = cache --timeout=3600
