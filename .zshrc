@@ -135,17 +135,10 @@ function mdown()
     '; markdown $@)
 }
 
-function findgrep() # {{{
-{
-    find . -iname "$1" -exec grep -Hn "$2" {} \;
-} # }}}
+findgrep() { find . -iname "$1" -exec grep -Hn "$2" {} \; }
 
-function redecho # {{{
-{
-    echo -n "\033[1;31m"
-    echo "$@"
-    echo -n "\033[m"
-} # }}}
+redecho() { echo -n "\033[1;31m" && echo "$@" && echo -n "\033[m" }
 
+vpy() { vim -p ${^argv:+${^argv}/}(*.py~__init__.py) }
 
 # [ -s "/Users/mattjj/.scm_breeze/scm_breeze.sh" ] && source "/Users/mattjj/.scm_breeze/scm_breeze.sh"
