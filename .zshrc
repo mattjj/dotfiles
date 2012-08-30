@@ -34,15 +34,6 @@ source "$HOME/.oh-my-zsh/init.zsh"
 # Customize to your needs...
 setopt autocd
 
-if [[ "$OSTYPE" == darwin* && -e ~/.zshrc_mac ]]
-then
-    source ~/.zshrc_mac
-fi
-if [ -e ~/.zshrc_specific ]
-then
-    source ~/.zshrc_specific
-fi
-
 # my key bindings
 bindkey -M viins "$keyinfo[Control]A" beginning-of-line
 bindkey -M viins "$keyinfo[Control]E" end-of-line
@@ -57,7 +48,6 @@ if [ -f /opt/local/etc/profile.d/autojump.sh ]; then
     . /opt/local/etc/profile.d/autojump.sh
 fi
 
-compdef pkill=kill
 compdef pkill=killall
 
 fancy-ctrl-z () {
@@ -141,4 +131,15 @@ redecho() { echo -n "\033[1;31m" && echo "$@" && echo -n "\033[m" }
 
 vpy() { vim -p ${^argv:+${^argv}/}(*.py~__init__.py) }
 
-# [ -s "/Users/mattjj/.scm_breeze/scm_breeze.sh" ] && source "/Users/mattjj/.scm_breeze/scm_breeze.sh"
+settitle() {
+    printf "\033k$1\033\\"
+}
+
+if [[ "$OSTYPE" == darwin* && -e ~/.zshrc_mac ]]
+then
+    source ~/.zshrc_mac
+fi
+if [ -e ~/.zshrc_specific ]
+then
+    source ~/.zshrc_specific
+fi
