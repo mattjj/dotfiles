@@ -78,6 +78,9 @@ alias gv='gvim'
 alias v='vim'
 alias vv='vim -u NONE'
 
+alias -g ND='*(/om[1])'
+alias -g NF='*(.om[1])'
+
 alias top='htop'
 
 alias cloc='cloc --exclude-dir=.git'
@@ -130,6 +133,8 @@ findgrep() { find . -iname "$1" -exec grep -Hn "$2" {} \; }
 redecho() { echo -n "\033[1;31m" && echo "$@" && echo -n "\033[m" }
 
 vpy() { vim -p ${^argv:+${^argv}/}(*.py~__init__.py) }
+
+vw() { vim $(which $1) }
 
 settitle() {
     printf "\033k$1\033\\"
