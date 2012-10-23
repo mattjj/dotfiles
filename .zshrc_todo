@@ -41,10 +41,10 @@ function toskip
 {
     if [[ "$*" =~ ^[0-9]+$ ]]
     then
-        MATCH=$(gsed -n "${1}p" $TODOFILE)
+        MATCH=$(gsed -n "$1p" $TODOFILE)
         # see comment below for why the temp file is necessary
         tac $TODOHISTORY | gsed "0,/$MATCH/{//d;}" | tac > ~/.todohist-temp
-        changesize=$(( $(wc -l <~/.todo-history) - $(wc -l <~/.todohist-temp) ))
+        changesize=$(( $(wc -l <$TODOHISTORY) - $(wc -l <~/.todohist-temp) ))
         if [ $changesize -ne 0 -a $changesize -ne 1 ]
         then
             redecho "!! problem revising history; revise manually !!"
