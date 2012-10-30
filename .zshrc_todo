@@ -105,3 +105,6 @@ function prune_donelist
     done)
     rm -f $DAYAGOFILE $TESTFILE
 }
+
+alias t=todo
+alias d=todone

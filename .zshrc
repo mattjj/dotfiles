@@ -140,6 +140,10 @@ settitle() {
     printf "\033k$1\033\\"
 }
 
+sslexporation() {
+    openssl x509 -noout -in <(openssl s_client -showcerts -connect $1) -dates
+}
+
 if [[ "$OSTYPE" == darwin* && -e ~/.zshrc_mac ]]
 then
     source ~/.zshrc_mac
