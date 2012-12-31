@@ -85,6 +85,10 @@ alias top='htop'
 
 alias cloc='cloc --exclude-dir=.git'
 
+alias restart_couch='/usr/bin/sudo launchctl stop org.apache.couchdb'
+alias start_couch='/usr/bin/sudo launchctl load -w /Library/LaunchDaemons/org.apache.couchdb.plist'
+alias stop_couch='/usr/bin/sudo launchctl unload /Library/LaunchDaemons/org.apache.couchdb.plist'
+
 function mdown()
 {
     (echo '
@@ -104,18 +108,18 @@ function mdown()
                     font-weight: normal;
                     margin-top: 48px;
                 }
-                h1 { font-size: 48px; }
+                h1 { font-size: 24px; }
                 h2 {
-                    font-size: 36px;
+                    font-size: 20px;
                     border-bottom: 6px solid #ddd;
                     padding: 0 0 6px 0;
                 }
                 h3 {
-                    font-size: 24px;
+                    font-size: 18px;
                     border-bottom: 6px solid #eee;
                     padding: 0 0 2px 0;
                 }
-                h4 { font-size: 20px; }
+                h4 { font-size: 16px; }
                 pre {
                     background-color: #f5f5f5;
                     font: normal 15px Menlo;
@@ -125,7 +129,7 @@ function mdown()
                 }
             </style>
         </head>
-    '; markdown $@)
+    '; multimarkdown $@)
 }
 
 findgrep() { find . -iname "$1" -exec grep -Hn "$2" {} \; }
@@ -142,6 +146,15 @@ settitle() {
 
 sslexporation() {
     openssl x509 -noout -in <(openssl s_client -showcerts -connect $1) -dates
+}
+
+cl() {
+    if [ $# = 0 ];
+    then
+        \cd && ls;
+    else
+        \cd "$*" && ls;
+    fi
 }
 
 if [[ "$OSTYPE" == darwin* && -e ~/.zshrc_mac ]]
