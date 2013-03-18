@@ -52,7 +52,7 @@ compdef pkill=killall
 
 fancy-ctrl-z () {
     if [[ $#BUFFER -eq 0 ]]; then
-        bg
+        fg
         zle redisplay
     else
         zle push-input
@@ -165,3 +165,5 @@ if [ -e ~/.zshrc_specific ]
 then
     source ~/.zshrc_specific
 fi
+
+# trap 'tput cuu 2' WINCH
