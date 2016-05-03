@@ -1,6 +1,6 @@
 [core]
     excludesfile = /Users/mattjj/.gitignore
-    editor = vim
+    editor = vim -u NONE
 [alias]
     st = status
     ci = commit
